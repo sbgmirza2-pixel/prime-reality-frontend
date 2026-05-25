@@ -1,65 +1,112 @@
 import React, { useState } from 'react';
 
+// 1. Multiple array items add kar diye hain dynamic premium images ke sath
 const testimonialsData = [
   {
     id: 1,
     quote: "“ THEY DID AN AMAZING WORK FOR OUR HOME ”",
-    feedback: "WORKING WITH THE AGENCY WAS A SEAMLESS AND EXCELLENT EXPERIENCE AND DEDICATION. TOGETHER, WE’LL CREATE SPACES THAT INSPIRE AND ELEVATE THE WAY YOU LIVE, WORK, AND PLAY. LET’S COLLABORATE TO BUILD BETTER COMMUNITIES, BUSINESSES, AND FUTURES.",
-    author: "DORIS D. SMITH",
+    feedback: "WORKING WITH THIS REAL ESTATE AGENCY WAS A SEAMLESS AND THE EXPERIENCE FROM START TO FINISH THEY UNDERSTOOD OUR NEED FOR A SPACE THAT COULD SERVE AS BOTH A COMFORTABLE HOME AND A PRODUCTIVE WORK ENVIRONMENT.",
+    author: "DORIS D. SNELL",
     role: "RENTAL PROPERTY OWNER",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" 
+    userImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200",
+    bgImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600",
+    frontImage: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    id: 2,
+    quote: "“ THE BEST ARCHITECTURAL PARTNERSHIP ”",
+    feedback: "THEIR ATTENTION TO STRUCTURAL INTEGRITY AND BESPOKE LUXURY DESIGN EXCEEDED OUR EXPECTATIONS. EVERY CORNER REFLECTS MODERN MINIMALISM AND FUNCTIONAL ELEGANCE. HIGHLY RECOMMENDED FOR CORPORATE PROJECTS.",
+    author: "ALEXANDER VANCE",
+    role: "PORTFOLIO INVESTOR",
+    userImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200",
+    bgImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=600",
+    frontImage: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    id: 3,
+    quote: "“ EXCEPTIONAL BESPOKE PROPERTY CARE ”",
+    feedback: "FROM MANAGING ACQUISITIONS TO FINAL ARCHITECTURAL TOUCHES, THE SYSTEM PROVIDED OUTSTANDING TRANSPARENCY. COMMUNICATION WAS CRISP, AND THE RESULTING ASSET VALUE HAS INCREASED SIGNIFICANTLY.",
+    author: "SARAH JENNINGS",
+    role: "CREATIVE DIRECTOR",
+    userImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200",
+    bgImage: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=600",
+    frontImage: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=600"
   }
 ];
 
 const TestimonialsCarousel = () => {
-  const [currentIndex] = useState(0);
-  const { quote, feedback, author, role, image } = testimonialsData[currentIndex];
+  // 2. State management slider ko chalane ke liye
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === testimonialsData.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? testimonialsData.length - 1 : prevIndex - 1
+    );
+  };
+
+  // Current item data destructuring
+  const { quote, feedback, author, role, userImage, bgImage, frontImage } = testimonialsData[currentIndex];
 
   return (
     <section className="bg-white py-20 px-6 md:px-12 lg:px-24 font-inter relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         
-        {/* Header Block: Exact Pill Shape (Square with Full Rounded Edges) */}
+        {/* Header Block: Title and Functional Navigation Arrows */}
         <div className="flex items-center justify-between mb-12">
-          <h2 className="font-serif text-4xl font-normal text-[#1F3E56] tracking-wide uppercase">
+          <h2 className="font-serif text-3xl md:text-4xl font-normal text-[#1F3E56] tracking-wide uppercase">
             SATISFIED CLIENTS SPEAK
           </h2>
-          <div className="flex space-x-2">
-            {/* Arrows with light blue circle theme exactly as in mockup */}
-            <button className="w-10 h-10 rounded-full bg-[#1F3E56] text-[#A1B1C1] flex items-center justify-center font-bold hover:bg-gray-700 transition">
+          
+          {/* Functional Navigation Buttons */}
+          <div className="flex space-x-3">
+            <button 
+              onClick={prevSlide}
+              className="w-11 h-11 rounded-full bg-[#1F3E56] text-white flex items-center justify-center font-bold text-xl hover:bg-[#C5A880] transition duration-300 cursor-pointer shadow-md select-none"
+              aria-label="Previous Slide"
+            >
               ‹
             </button>
-            <button className="w-10 h-10 rounded-full bg-[#1F3E56] text-[#A1B1C1] flex items-center justify-center font-bold hover:bg-gray-700 transition">
+            <button 
+              onClick={nextSlide}
+              className="w-11 h-11 rounded-full bg-[#1F3E56] text-white flex items-center justify-center font-bold text-xl hover:bg-[#C5A880] transition duration-300 cursor-pointer shadow-md select-none"
+              aria-label="Next Slide"
+            >
               ›
             </button>
           </div>
         </div>
 
-        {/* Split Grid Content: Balanced Layout */}
+        {/* Split Grid Content Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           
-          {/* Left: Perfectly Positioned, Square-but-Rounded Images with Wireframes */}
-          <div className="relative h-[380px] md:h-[450px] w-full flex items-center">
-            {/* Background Image: Rounded corners as referenced */}
-            <div className="absolute left-0 top-0 w-[65%] h-[82%] overflow-hidden rounded-3xl shadow-md grayscale">
+          {/* Left Block: Dynamic Overlapping Images */}
+          <div className="relative h-[380px] md:h-[450px] w-full flex items-center animate-fade-in">
+            {/* Background Image (Grayed out) */}
+            <div className="absolute left-0 top-0 w-[65%] h-[82%] overflow-hidden rounded-3xl shadow-md grayscale transition-all duration-500">
               <img 
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=600" 
-                alt="Architecture Exterior" 
+                src={bgImage} 
+                alt="Architecture Framework" 
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* Front Image: Overlapping, Thick White Border, Rounded corners */}
-            <div className="absolute right-4 md:right-8 bottom-0 w-[65%] h-[82%] overflow-hidden rounded-3xl border-[6px] border-white shadow-2xl">
+            {/* Front Image (Main asset focus with white frame border) */}
+            <div className="absolute right-4 md:right-8 bottom-0 w-[65%] h-[82%] overflow-hidden rounded-3xl border-[6px] border-white shadow-2xl transition-all duration-500">
               <img 
-                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=600" 
-                alt="Interior Luxury Living" 
+                src={frontImage} 
+                alt="Bespoke Design Presentation" 
                 className="w-full h-full object-cover"
               />
             </div>
           </div>
 
-          {/* Right Text Block Content */}
-          <div className="space-y-6 lg:pl-6">
+          {/* Right Block: Content Details */}
+          <div className="space-y-6 lg:pl-6 min-h-[300px] flex flex-col justify-center">
             <h3 className="font-serif text-2xl md:text-3xl font-bold text-[#0A1A2F] leading-snug tracking-wide uppercase">
               {quote}
             </h3>
@@ -67,13 +114,13 @@ const TestimonialsCarousel = () => {
               {feedback}
             </p>
             
-            {/* Divider matching wireframe style lines */}
+            {/* Decorative Divider bar */}
             <div className="w-24 h-[1px] bg-gray-300"></div>
             
-            {/* User Meta Data Block */}
+            {/* User Meta Identity Grid */}
             <div className="flex items-center space-x-4 pt-2">
               <img 
-                src={image} 
+                src={userImage} 
                 alt={author} 
                 className="w-12 h-12 rounded-full object-cover border border-[#0A1A2F]/20"
               />
