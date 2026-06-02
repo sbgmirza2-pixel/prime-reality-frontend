@@ -2,29 +2,67 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 
 import Home from "../pages/public/Home";
 import ContactUs from "../pages/public/ContactUs";
+import Login from "../pages/public/Login";
+import Register from "../pages/public/Register";
+import Unauthorized from "../pages/public/Unauthorized";
+
+import BuyerPage from "../pages/buyer/BuyerPage";
+import SellerPage from "../pages/seller/SellerPage";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+
+import PrivateRoute from "./PrivateRoute";
 
 // main routes component
-// poori app routing yahan handle hogi
+// public aur protected routes yahan handle honge
 
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* home route */}
+        {/* public routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+
+        {/* buyer protected route */}
         <Route
-          path="/"
-          element={<Home />}
+          path="/buyer"
+          element={
+            <PrivateRoute allowedRole="buyer">
+              <BuyerPage />
+            </PrivateRoute>
+          }
         />
 
-        {/* contact route */}
+        {/* seller protected route */}
         <Route
-          path="/contact"
-          element={<ContactUs />}
+          path="/seller"
+          element={
+            <PrivateRoute allowedRole="seller">
+              <SellerPage />
+            </PrivateRoute>
+          }
         />
+
+        {/* admin protected route */}
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute allowedRole="admin">
+              <AdminDashboard />
+            </PrivateRoute>
+          }
+        />
+
+        {/* fallback route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
