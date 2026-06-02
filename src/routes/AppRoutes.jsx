@@ -18,20 +18,26 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import PrivateRoute from "./PrivateRoute";
 
 // main routes component
-// public aur protected routes yahan handle honge
+// public + protected routes yahan handle honge
 
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         {/* public routes */}
+
         <Route path="/" element={<Home />} />
+
         <Route path="/contact" element={<ContactUs />} />
+
         <Route path="/login" element={<Login />} />
+
         <Route path="/register" element={<Register />} />
+
         <Route path="/unauthorized" element={<Unauthorized />} />
 
-        {/* buyer protected route */}
+        {/* protected buyer route */}
+
         <Route
           path="/buyer"
           element={
@@ -41,7 +47,8 @@ function AppRoutes() {
           }
         />
 
-        {/* seller protected route */}
+        {/* protected seller route */}
+
         <Route
           path="/seller"
           element={
@@ -51,7 +58,8 @@ function AppRoutes() {
           }
         />
 
-        {/* admin protected route */}
+        {/* protected admin route */}
+
         <Route
           path="/admin"
           element={
@@ -62,6 +70,7 @@ function AppRoutes() {
         />
 
         {/* fallback route */}
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
