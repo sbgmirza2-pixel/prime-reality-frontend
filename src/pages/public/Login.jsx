@@ -7,6 +7,11 @@ import {
 
 import { useDispatch } from "react-redux";
 
+import {
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
+
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 
@@ -26,6 +31,7 @@ import { loginSuccess } from "../../store/slices/authSlice";
 
 // login page
 // backend email/password verify karega
+// password visibility professional icon se handle ho rahi hai
 
 function Login() {
   const navigate = useNavigate();
@@ -36,6 +42,8 @@ function Login() {
     email: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [error, setError] = useState("");
 
@@ -146,15 +154,30 @@ function Login() {
               className="w-full border border-gray-200 rounded-full px-5 py-3 outline-none focus:border-[#C9A03D]"
             />
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter Password"
-              autoComplete="current-password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full border border-gray-200 rounded-full px-5 py-3 outline-none focus:border-[#C9A03D]"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter Password"
+                autoComplete="current-password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full border border-gray-200 rounded-full px-5 py-3 pr-12 outline-none focus:border-[#C9A03D]"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-5 top-1/2 -translate-y-1/2 text-[#0A1A2F]/65 hover:text-[#0A1A2F] transition-all"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <FaEyeSlash size={17} />
+                ) : (
+                  <FaEye size={17} />
+                )}
+              </button>
+            </div>
 
             <button
               type="submit"

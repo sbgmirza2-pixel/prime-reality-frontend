@@ -1,30 +1,30 @@
 // reusable search bar
-// hero search, footer search aur property search me use hoga
+// property search ke liye clean and reusable component
 
 function SearchBar({
   value,
   onChange,
   onSubmit,
-  placeholder = "Find your property",
-  buttonLabel = "🔍",
+  placeholder = "Search by city, title or location",
+  buttonLabel = "Search",
   className = "",
 }) {
   return (
     <form
       onSubmit={onSubmit}
-      className={`w-full bg-white rounded-full p-1.5 flex items-center shadow-md ${className}`}
+      className={`w-full bg-white rounded-full p-1.5 flex items-center shadow-md border border-black/5 ${className}`}
     >
       <input
         type="text"
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="flex-1 bg-transparent px-5 py-3 text-[#0A1A2F] text-xs font-semibold tracking-widest uppercase outline-none placeholder:text-gray-400"
+        className="flex-1 bg-transparent px-5 py-3 text-[#0A1A2F] text-sm outline-none placeholder:text-gray-400"
       />
 
       <button
         type="submit"
-        className="w-10 h-10 rounded-full bg-[#0A1A2F] text-white flex items-center justify-center hover:bg-[#C9A03D] hover:text-[#0A1A2F] transition-all duration-300"
+        className="bg-[#0A1A2F] text-white rounded-full px-6 py-3 text-[11px] font-bold uppercase tracking-widest hover:bg-[#C9A03D] hover:text-[#0A1A2F] transition-all duration-300"
       >
         {buttonLabel}
       </button>

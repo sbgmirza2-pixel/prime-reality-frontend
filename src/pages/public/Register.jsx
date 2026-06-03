@@ -7,6 +7,11 @@ import {
 
 import { useDispatch } from "react-redux";
 
+import {
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
+
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 
@@ -28,8 +33,8 @@ import {
 import { loginSuccess } from "../../store/slices/authSlice";
 
 // register page
-// yahan strong password validation rakhi hai
-// successful register ke baad user ko role ke hisaab se redirect karenge
+// strong password validation rakhi hai
+// password visibility professional icon se handle ho rahi hai
 
 function Register() {
   const navigate = useNavigate();
@@ -44,6 +49,10 @@ function Register() {
     password: "",
     confirm_password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [error, setError] = useState("");
 
@@ -153,7 +162,7 @@ function Register() {
           </h1>
 
           {error && (
-            <p className="bg-red-50 text-[#EF4444] text-sm text-center p-3 rounded-xl mb-5">
+            <p className="bg-red-50 text-[#EF4444] text-sm text-center p-3 rounded-xl mb-5 md:col-span-2">
               {error}
             </p>
           )}
@@ -202,25 +211,59 @@ function Register() {
               <option value="seller">Seller</option>
             </select>
 
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              autoComplete="new-password"
-              value={formData.password}
-              onChange={handleChange}
-              className="border border-gray-200 rounded-full px-5 py-3 outline-none focus:border-[#C9A03D]"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                autoComplete="new-password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full border border-gray-200 rounded-full px-5 py-3 pr-12 outline-none focus:border-[#C9A03D]"
+              />
 
-            <input
-              type="password"
-              name="confirm_password"
-              placeholder="Confirm Password"
-              autoComplete="new-password"
-              value={formData.confirm_password}
-              onChange={handleChange}
-              className="border border-gray-200 rounded-full px-5 py-3 outline-none focus:border-[#C9A03D]"
-            />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-5 top-1/2 -translate-y-1/2 text-[#0A1A2F]/65 hover:text-[#0A1A2F] transition-all"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <FaEyeSlash size={17} />
+                ) : (
+                  <FaEye size={17} />
+                )}
+              </button>
+            </div>
+
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirm_password"
+                placeholder="Confirm Password"
+                autoComplete="new-password"
+                value={formData.confirm_password}
+                onChange={handleChange}
+                className="w-full border border-gray-200 rounded-full px-5 py-3 pr-12 outline-none focus:border-[#C9A03D]"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-5 top-1/2 -translate-y-1/2 text-[#0A1A2F]/65 hover:text-[#0A1A2F] transition-all"
+                aria-label={
+                  showConfirmPassword
+                    ? "Hide confirm password"
+                    : "Show confirm password"
+                }
+              >
+                {showConfirmPassword ? (
+                  <FaEyeSlash size={17} />
+                ) : (
+                  <FaEye size={17} />
+                )}
+              </button>
+            </div>
 
             <button
               type="submit"

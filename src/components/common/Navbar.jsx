@@ -1,7 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 
 // reusable navbar
-// final design ke according left logo, center links, right actions
+// final design ke according navbar same rakha hai
+// login/register navbar me add nahi kar rahe because design me nahi hai
 
 function Navbar() {
   const navLinks = [
@@ -58,7 +59,7 @@ function Navbar() {
           </Link>
 
           <Link
-            to="/book-now"
+            to="/login"
             className="bg-[#0A1A2F] text-white text-[10px] font-bold tracking-widest uppercase px-7 py-3 rounded-full hover:bg-[#C9A03D] hover:text-[#0A1A2F] transition-all duration-300"
           >
             Book Now

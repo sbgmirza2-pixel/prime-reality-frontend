@@ -1,9 +1,14 @@
+import { useNavigate } from "react-router-dom";
+
 import Button from "../common/Button";
 
 // stats + CTA section
-// design ke bottom middle area jaisa layout
+// design same rakha hai
+// Book Now button login page pe redirect karega
 
 function StatsCTASection() {
+  const navigate = useNavigate();
+
   const stats = [
     {
       value: "12+ Million",
@@ -62,7 +67,11 @@ function StatsCTASection() {
             and elevate the way you live, work, and play.
           </p>
 
-          <Button text="Book Now" variant="primary" />
+          <Button
+            text="Book Now"
+            variant="primary"
+            onClick={() => navigate("/login")}
+          />
         </div>
       </div>
     </section>

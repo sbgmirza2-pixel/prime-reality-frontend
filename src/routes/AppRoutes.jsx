@@ -10,6 +10,7 @@ import ContactUs from "../pages/public/ContactUs";
 import Login from "../pages/public/Login";
 import Register from "../pages/public/Register";
 import Unauthorized from "../pages/public/Unauthorized";
+import Properties from "../pages/public/Properties";
 
 import BuyerPage from "../pages/buyer/BuyerPage";
 import SellerPage from "../pages/seller/SellerPage";
@@ -35,6 +36,8 @@ function AppRoutes() {
         <Route path="/register" element={<Register />} />
 
         <Route path="/unauthorized" element={<Unauthorized />} />
+        
+        <Route path="/properties" element={<Properties />} />
 
         {/* protected buyer route */}
 

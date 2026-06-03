@@ -1,21 +1,32 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Button from "../common/Button";
 
 // hero section
-// design ke according luxury heading, two property images aur CTA buttons
+// design same rakha hai
+// hero search ab properties page ke filters ke sath connect hai
 
 function HeroSection() {
+  const navigate = useNavigate();
+
   const [propertyType, setPropertyType] = useState("");
   const [location, setLocation] = useState("");
 
   const handleSearch = (e) => {
     e.preventDefault();
 
-    // later property listing page ke sath connect karenge
-    console.log("Property search:", {
-      propertyType,
-      location,
-    });
+    const params = new URLSearchParams();
+
+    if (propertyType) {
+      params.set("type", propertyType);
+    }
+
+    if (location) {
+      params.set("city", location);
+    }
+
+    navigate(`/properties?${params.toString()}`);
   };
 
   return (
@@ -94,6 +105,7 @@ function HeroSection() {
                     <option value="villa">Villa</option>
                     <option value="apartment">Apartment</option>
                     <option value="land">Land</option>
+                    <option value="commercial">Commercial</option>
                   </select>
 
                   <select
@@ -102,9 +114,9 @@ function HeroSection() {
                     className="bg-black/40 border border-white/40 text-white rounded-full px-4 py-3 text-[10px] uppercase outline-none"
                   >
                     <option value="">Location</option>
-                    <option value="dubai">Dubai</option>
                     <option value="karachi">Karachi</option>
-                    <option value="london">London</option>
+                    <option value="lahore">Lahore</option>
+                    <option value="islamabad">Islamabad</option>
                   </select>
 
                   <button
@@ -119,10 +131,19 @@ function HeroSection() {
           </div>
         </div>
 
-        {/* CTA spacing */}
+        {/* CTA buttons */}
         <div className="mt-8 flex gap-4">
-          <Button text="Explore Land" variant="primary" />
-          <Button text="Book Now" variant="outline" />
+          <Button
+            text="Explore Land"
+            variant="primary"
+            onClick={() => navigate("/properties")}
+          />
+
+          <Button
+            text="Book Now"
+            variant="outline"
+            onClick={() => navigate("/login")}
+          />
         </div>
       </div>
     </section>
