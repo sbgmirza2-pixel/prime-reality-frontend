@@ -8,10 +8,12 @@ import {
 } from "../utils/helpers/authHelper";
 
 // axios instance
-// base URL .env file se aa raha hai
+// base URL .env se aa raha hai
+// timeout is liye add kiya hai taake request forever pending na rahe
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
+  timeout: 20000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -35,7 +37,7 @@ api.interceptors.request.use(
 );
 
 // response interceptor
-// agar access token expire ho jaye to refresh token se new token lene ki try hogi
+// access token expire ho jaye to refresh token se new token lene ki try hogi
 
 api.interceptors.response.use(
   (response) => response,
@@ -56,6 +58,7 @@ api.interceptors.response.use(
         if (!refreshToken) {
           clearAuthData();
           window.location.href = "/login";
+
           return Promise.reject(error);
         }
 
@@ -63,6 +66,7 @@ api.interceptors.response.use(
           `${import.meta.env.VITE_API_BASE_URL}/auth/refresh`,
           {},
           {
+            timeout: 20000,
             headers: {
               Authorization: `Bearer ${refreshToken}`,
             },
