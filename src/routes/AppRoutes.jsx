@@ -14,7 +14,7 @@ import Properties from "../pages/public/Properties";
 
 import BuyerPage from "../pages/buyer/BuyerPage";
 import SellerPage from "../pages/seller/SellerPage";
-import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminPage from "../pages/admin/AdminPage";
 
 import PrivateRoute from "./PrivateRoute";
 
@@ -67,7 +67,7 @@ function AppRoutes() {
           path="/admin"
           element={
             <PrivateRoute allowedRole="admin">
-              <AdminDashboard />
+              <AdminPage />
             </PrivateRoute>
           }
         />
