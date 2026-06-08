@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import {getAccessToken, clearAuthData } from '../../../utils/helpers/authHelper';
+import { getAccessToken, clearAuthData } from '../../../utils/helpers/authHelper';
+
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('property-approvals');
@@ -17,12 +18,12 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Base API URL
-  const API_BASE_URL = 'http://localhost:8000/api/v1';
+  // 🌐 Dynamic Environment API Base URL (Secure & Live Fix)
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  // 🔑 Configuration for Axios Request Header
+  // 🔑 Configuration for Axios Request Header (Fixed to use getAccessToken)
   const getAuthHeader = () => {
-    const token = getToken();
+    const token = getAccessToken(); 
     return { headers: { Authorization: `Bearer ${token}` } };
   };
 
@@ -31,7 +32,7 @@ const AdminDashboard = () => {
     setLoading(true);
     try {
       const response = await axios.get(`${API_BASE_URL}/admin/properties/pending`, getAuthHeader());
-      setAdminProperties(response.data); // Real backend array map ho jayega
+      setAdminProperties(response.data || []); // Secure fallback array
       setErrorMsg('');
     } catch (err) {
       setErrorMsg('Failed to load pending properties. Make sure you are logged in as Admin.');
@@ -45,7 +46,7 @@ const AdminDashboard = () => {
     setLoading(true);
     try {
       const response = await axios.get(`${API_BASE_URL}/admin/users`, getAuthHeader());
-      setUsersList(response.data);
+      setUsersList(response.data || []); // Secure fallback array
       setErrorMsg('');
     } catch (err) {
       setErrorMsg('Failed to load user management control panel.');
@@ -122,7 +123,6 @@ const AdminDashboard = () => {
       setFormSuccess('');
       return;
     }
-    // Mocking text generation trigger from Section 8 endpoint
     try {
       setFormError('');
       setFormSuccess('System announcement broadcasted successfully via Backend hooks!');
@@ -155,7 +155,7 @@ const AdminDashboard = () => {
         <div className="p-6 border-t border-gray-800 space-y-4">
           <button 
             onClick={handleLogout}
-            className="w-full bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition flex items-center justify-center space-x-2"
+            className="w-full bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition flex items-center justify-center space-x-2 cursor-pointer"
           >
             <span>🚪</span> <span>Logout System</span>
           </button>
@@ -166,14 +166,12 @@ const AdminDashboard = () => {
       {/* MAIN CONTENT AREA */}
       <div className="flex-grow p-6 md:p-10 overflow-y-auto h-screen">
         
-        {/* Error Notification Bar */}
         {errorMsg && (
           <div className="mb-6 p-4 bg-red-100 text-red-700 font-bold text-xs rounded-xl border border-red-200">
             ⚠️ {errorMsg}
           </div>
         )}
 
-        {/* Loading Spinner */}
         {loading && (
           <div className="text-sm font-semibold text-[#C9A03D] mb-4 animate-pulse">
             🔄 Contacting Prime Reality Backend API Pipeline...
@@ -216,7 +214,7 @@ const AdminDashboard = () => {
                   onChange={(e) => setAnnouncement(e.target.value)}
                   className="w-full text-xs p-2 border border-gray-200 rounded-lg focus:outline-none focus:border-[#C9A03D]"
                 />
-                <button type="submit" className="w-full py-1.5 bg-[#0A1A2F] text-white rounded-lg text-[11px] font-bold uppercase tracking-wider hover:bg-opacity-90 transition">
+                <button type="submit" className="w-full py-1.5 bg-[#0A1A2F] text-white rounded-lg text-[11px] font-bold uppercase tracking-wider hover:bg-opacity-90 transition cursor-pointer">
                   Broadcast Alert
                 </button>
               </form>
@@ -277,10 +275,10 @@ const AdminDashboard = () => {
                         </button>
                       </td>
                       <td className="py-4 px-4 text-center space-x-2">
-                        <button onClick={() => handleApproveProperty(prop.id)} className="px-3 py-1.5 bg-emerald-600 text-white hover:bg-emerald-700 rounded-lg font-bold text-[10px] uppercase tracking-wider transition">
+                        <button onClick={() => handleApproveProperty(prop.id)} className="px-3 py-1.5 bg-emerald-600 text-white hover:bg-emerald-700 rounded-lg font-bold text-[10px] uppercase tracking-wider transition cursor-pointer">
                           Approve
                         </button>
-                        <button onClick={() => handleRejectProperty(prop.id)} className="px-3 py-1.5 bg-red-500 text-white hover:bg-red-600 rounded-lg font-bold text-[10px] uppercase tracking-wider transition">
+                        <button onClick={() => handleRejectProperty(prop.id)} className="px-3 py-1.5 bg-red-500 text-white hover:bg-red-600 rounded-lg font-bold text-[10px] uppercase tracking-wider transition cursor-pointer">
                           Reject
                         </button>
                       </td>
@@ -332,7 +330,7 @@ const AdminDashboard = () => {
                       <td className="py-4 px-4 text-center">
                         <button 
                           onClick={() => handleDeleteUser(user.id, user.role)}
-                          className="px-3 py-1.5 rounded-lg font-bold text-[10px] tracking-wider uppercase border border-red-200 text-red-500 hover:bg-red-50 transition"
+                          className="px-3 py-1.5 rounded-lg font-bold text-[10px] tracking-wider uppercase border border-red-200 text-red-500 hover:bg-red-50 transition cursor-pointer"
                         >
                           🚫 Delete Account
                         </button>

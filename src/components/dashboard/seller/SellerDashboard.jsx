@@ -17,8 +17,8 @@ const SellerDashboard = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [actionLoading, setActionLoading] = useState(null); // Individual row/card loader tracking
 
-  const API_BASE_URL = 'http://localhost:8000/api/v1';
-
+ // 🌐 Dynamic Environment API Base URL (Secure & Live)
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   // 🔑 Auth Header Helper
   const getAuthHeader = () => {
     const token = getAccessToken();

@@ -15,8 +15,8 @@ const BuyerDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Base API URL Configuration
-  const API_BASE_URL = 'http://localhost:8000/api/v1';
+  // 🌐 Dynamic Environment API Base URL (Secure & Live)
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   // 🔑 Configuration for Axios Request Header
   const getAuthHeader = () => {
