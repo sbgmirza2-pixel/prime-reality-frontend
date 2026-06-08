@@ -1,5 +1,5 @@
 // app constants
-// roles aur repeated keys yahan define hain
+// repeated strings avoid karne ke liye
 
 export const ROLES = {
   BUYER: "buyer",
@@ -8,6 +8,7 @@ export const ROLES = {
 };
 
 export const STORAGE_KEYS = {
-  TOKEN: "access_token",
+  ACCESS_TOKEN: "access_token",
+  REFRESH_TOKEN: "refresh_token",
   ROLE: "role",
 };

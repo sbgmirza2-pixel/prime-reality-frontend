@@ -1,7 +1,7 @@
 import SellerDashboard from "../../components/dashboard/seller/SellerDashboard";
 
 // seller page wrapper
-// seller dashboard yahan render ho raha hai
+// actual seller dashboard component ko yahan render kar rahe hain
 
 function SellerPage() {
   return <SellerDashboard />;

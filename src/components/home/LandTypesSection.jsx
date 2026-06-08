@@ -6,7 +6,7 @@ const landTypes = [
     id: 1,
     title: "Build The Home Of Your Dreams",
     image:
-      "https://images.unsplash.com/photo-1600607687644-c7171b42498b?auto=format&fit=crop&q=80&w=700",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=700",
   },
   {
     id: 2,
@@ -52,6 +52,10 @@ function LandTypesSection() {
                 alt={item.title}
                 className="w-full h-[360px] md:h-[420px] object-cover"
                 loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=700";
+                }}
               />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>

@@ -1,7 +1,7 @@
 import BuyerDashboard from "../../components/dashboard/buyer/BuyerDashboard";
 
 // buyer page wrapper
-// buyer dashboard yahan render ho raha hai
+// actual buyer dashboard component ko yahan render kar rahe hain
 
 function BuyerPage() {
   return <BuyerDashboard />;
