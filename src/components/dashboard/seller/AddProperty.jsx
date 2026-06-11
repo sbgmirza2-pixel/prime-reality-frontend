@@ -2,10 +2,10 @@
 import React from 'react';
 
 const AddProperty = ({ 
-  formData, 
+  formData = {},
   handleInputChange, 
   handleImageChange, 
-  propertyImages, 
+  propertyImages = [], 
   removeImage, 
   handleFormSubmit 
 }) => {
@@ -20,11 +20,11 @@ const AddProperty = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 flex flex-col space-y-2">
             <label className="font-bold uppercase text-xs text-[#0A1A2F]/70">Property Title</label>
-            <input required type="text" name="title" value={formData.title} onChange={handleInputChange} placeholder="e.g., Royal Sea penthouse" className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
+            <input required type="text" name="title" value={formData.title || ""} onChange={handleInputChange} placeholder="e.g., Royal Sea penthouse" className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
           </div>
           <div className="flex flex-col space-y-2">
             <label className="font-bold uppercase text-xs text-[#0A1A2F]/70">Property Type</label>
-            <select name="property_type" value={formData.property_type} onChange={handleInputChange} className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition">
+            <select name="property_type" value={formData.property_type || "apartment"} onChange={handleInputChange} className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition">
               <option value="apartment">Apartment</option>
               <option value="villa">Villa</option>
               <option value="penthouse">Penthouse</option>
@@ -37,32 +37,32 @@ const AddProperty = ({
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="flex flex-col space-y-2">
             <label className="font-bold uppercase text-xs text-[#0A1A2F]/70">Price ($)</label>
-            <input required type="number" name="price" value={formData.price} onChange={handleInputChange} className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
+            <input required type="number" name="price" value={formData.price || ""} onChange={handleInputChange} className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
           </div>
           <div className="flex flex-col space-y-2">
             <label className="font-bold uppercase text-xs text-[#0A1A2F]/70">Bedrooms</label>
-            <input type="number" name="bedrooms" value={formData.bedrooms} onChange={handleInputChange} className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
+            <input type="number" name="bedrooms" value={formData.bedrooms || ""} onChange={handleInputChange} className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
           </div>
           <div className="flex flex-col space-y-2">
             <label className="font-bold uppercase text-xs text-[#0A1A2F]/70">Bathrooms</label>
-            <input type="number" name="bathrooms" value={formData.bathrooms} onChange={handleInputChange} className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
+            <input type="number" name="bathrooms" value={formData.bathrooms || ""} onChange={handleInputChange} className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
           </div>
           <div className="flex flex-col space-y-2">
             <label className="font-bold uppercase text-xs text-[#0A1A2F]/70">Area (Sq-Ft)</label>
-            <input type="number" name="area_sqft" value={formData.area_sqft} onChange={handleInputChange} className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
+            <input type="number" name="area_sqft" value={formData.area_sqft || ""} onChange={handleInputChange} className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
           </div>
         </div>
 
         {/* Address */}
         <div className="flex flex-col space-y-2">
           <label className="font-bold uppercase text-xs text-[#0A1A2F]/70">Address Location</label>
-          <input required type="text" name="address" value={formData.address} onChange={handleInputChange} placeholder="e.g., Prime Sector, Downtown" className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
+          <input required type="text" name="address" value={formData.address || ""} onChange={handleInputChange} placeholder="e.g., Prime Sector, Downtown" className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition" />
         </div>
 
-        {/* 📝 Description Field (Added for Full DB Validation Support) */}
+        {/* Description Field */}
         <div className="flex flex-col space-y-2">
           <label className="font-bold uppercase text-xs text-[#0A1A2F]/70">Property Description</label>
-          <textarea name="description" rows="4" value={formData.description} onChange={handleInputChange} placeholder="Write high-end alluring details about this asset..." className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition resize-none" />
+          <textarea name="description" rows="4" value={formData.description || ""} onChange={handleInputChange} placeholder="Write high-end alluring details about this asset..." className="p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-[#C9A03D] outline-none transition resize-none" />
         </div>
 
         {/* IMAGE UPLOADER */}

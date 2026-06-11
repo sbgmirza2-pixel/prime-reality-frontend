@@ -4,6 +4,7 @@ import api from '../../../services/api';
 import MyPropertiesList from './MyPropertiesList'; 
 import PropertyInquiries from './PropertyInquiries';
 import AnalyticsPanel from './AnalyticsPanel';
+import AddPropertyContainer from './AddPropertyContainer';
 import { clearAuthData } from '../../../utils/helpers/authHelper';
 
 // Seller Dashboard Component
@@ -15,13 +16,13 @@ const SellerDashboard = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   // Fetch listed properties safely
+// Fetch listed properties safely (CRASH-PROOF & ROBUST)
   const fetchMyProperties = async () => {
     setLoading(true);
     try {
-      const response = await api.get('/seller/properties');
-      
-      // CRASH FIX: Checking array schema configuration variations safely
+      const response = await api.get('/properties/my-properties');
       const data = response?.data;
+      
       if (Array.isArray(data)) {
         setMyProperties(data);
       } else if (data && Array.isArray(data.properties)) {
@@ -33,9 +34,20 @@ const SellerDashboard = () => {
       }
       setErrorMsg('');
     } catch (err) {
-      setErrorMsg(
-        err?.response?.data?.detail || 'Failed to sync your real estate catalog.'
-      );
+      console.error("Backend Error Response:", err?.response?.data);
+
+      // 🟢 SAFEST CHECK: Agar detail ke andar complex array/object ho toh handle karein
+      const rawDetail = err?.response?.data?.detail;
+      if (typeof rawDetail === 'string') {
+        setErrorMsg(rawDetail);
+      } else if (Array.isArray(rawDetail) && rawDetail[0]?.msg) {
+        // FastAPI validation array ka pehla error extract karein
+        setErrorMsg(`${rawDetail[0].loc.join('.')} - ${rawDetail[0].msg}`);
+      } else if (rawDetail && typeof rawDetail === 'object') {
+        setErrorMsg(JSON.stringify(rawDetail));
+      } else {
+        setErrorMsg('Failed to sync your real estate catalog (Status 422).');
+      }
     } finally {
       setLoading(false);
     }
@@ -70,6 +82,17 @@ const SellerDashboard = () => {
               }`}
             >
               <span>🏡</span> <span>My Properties</span>
+            </button>
+
+            {/* 🟢 Sidebar Add Property Button Linked Properly */}
+            <button 
+              type="button" 
+              onClick={() => setActiveTab('add-property')} 
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-semibold text-sm transition ${
+                activeTab === 'add-property' ? 'bg-[#C9A03D]/20 text-[#C9A03D]' : 'hover:bg-white/5 text-gray-300'
+              }`}
+            >
+              <span>✨</span> <span>Add Luxury Property</span>
             </button>
 
             <button 
@@ -120,11 +143,21 @@ const SellerDashboard = () => {
           </div>
         )}
 
-        {/* TAB 1: PROPERTIES CATALOGUE */}
+        {/* TAB 1: PROPERTIES CATALOGUE LIST */}
         {activeTab === 'my-properties' && (
           <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
             <MyPropertiesList properties={myProperties} refreshList={fetchMyProperties} />
           </div>
+        )}
+
+        {/* 🟢 TAB 2: SEPARATE ADD PROPERTY CONTENT VIEW */}
+        {activeTab === 'add-property' && (
+          <AddPropertyContainer 
+            onPropertyAdded={() => {
+              fetchMyProperties(); 
+              setActiveTab('my-properties'); // Form submit hone ke baad auto list par bhej dega
+            }} 
+          />
         )}
 
         {/* RELATED SYSTEM VIEWS */}
